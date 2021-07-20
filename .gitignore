@@ -1,3 +1,9 @@
+# Build
 node_modules
-.env
 dist
+
+# Protected
+.env
+
+# Prisma
+prisma/generated/**
