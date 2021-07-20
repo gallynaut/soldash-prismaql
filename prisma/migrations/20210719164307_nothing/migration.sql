@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Token" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "sol_address" DROP NOT NULL,
+ALTER COLUMN "gecko_id" DROP NOT NULL,
+ALTER COLUMN "website" DROP NOT NULL,
+ALTER COLUMN "twitter" DROP NOT NULL;
