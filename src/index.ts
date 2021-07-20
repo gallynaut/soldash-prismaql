@@ -28,8 +28,7 @@ const app = async () => {
 
   new ApolloServer({ schema, context: context }).listen({ port: port }, () =>
     console.log(`
-🚀 Server ready at: http://localhost:%d
-⭐️  See sample queries: http://pris.ly/e/ts/graphql-typegraphql#using-the-graphql-api`, port
+🚀 Server ready at: http://localhost:%d`, port
     ),
   )
 }

@@ -4,7 +4,9 @@
     "dev": "ts-node-dev --no-notify --respawn --transpile-only src/index.ts",
     "migrate": "npx prisma migrate dev",
     "seed": "npx prisma db seed --preview-feature",
-    "docker": "docker-compose up -d"
+    "docker": "docker-compose up -d",
+    "build": "tsc",
+    "prod": "node dist/index.js"
   },
   "dependencies": {
     "@prisma/client": "2.27.0",
