@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { ObjectType, Field, ID } from 'type-graphql'
 
 @ObjectType()
-export class Token {
+export default class Token {
   @Field((type) => ID)
   id: number
 

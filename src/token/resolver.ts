@@ -5,14 +5,11 @@ import {
   Mutation,
   Arg,
   Ctx,
-  FieldResolver,
-  Root,
-  Int,
   InputType,
   Field,
 } from 'type-graphql'
-import { Token } from '../Token'
-import { Context } from '../../context'
+import Token from './type'
+import { Context } from '../index'
 
 
 @InputType()
@@ -25,7 +22,7 @@ class TokenCreateInput {
 }
 
 @Resolver(Token)
-export class TokenResolver {
+export default class TokenResolver {
   @Mutation((returns) => Token)
   async create(
     @Ctx() ctx: Context,
