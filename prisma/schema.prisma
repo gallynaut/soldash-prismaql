@@ -14,12 +14,69 @@ datasource db {
 }
 
 model Token {
-  id            Int                         @default(autoincrement()) @id
-  name          String @db.VarChar(32) @unique
-  symbol        String @db.VarChar(16) @unique
-  description   String? @db.VarChar(256)
-  sol_address   String? @db.VarChar(64)
-  gecko_id      String? @db.VarChar(64)
-  website       String? @db.VarChar(256)
-  twitter       String? @db.VarChar(256)
+  id            Int            @id @default(autoincrement())
+  name          String         @unique @db.VarChar(64)
+  symbol        String         @unique @db.VarChar(32)
+  description   String?        @db.VarChar(256)
+  sol_address   String?        @unique @db.VarChar(64)
+  gecko_id      String?        @unique @db.VarChar(64)
+  serum_id      String?        @db.VarChar(64)
+  social        TokenSocial?
+  gecko_social  GeckoSocial[]
+  gecko_finance GeckoFinance[]
+  Serum         Serum[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+}
+
+model TokenSocial {
+  id        Int      @id @default(autoincrement())
+  website   String?  @db.VarChar(256)
+  twitter   String?  @db.VarChar(256)
+  logoURI   String?  @db.VarChar(256)
+  token     Token    @relation(fields: [token_id], references: [id])
+  token_id  Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model GeckoSocial {
+  id                              Int    @id @default(autoincrement())
+  timestamp                       BigInt
+  gecko_id                        String @db.VarChar(64)
+  gecko_score                     Float
+  gecko_rank                      Int
+  alexa_rank                      Int?
+  public_interest_score           Float?
+  liquidity_score                 Float?
+  sentiment_votes_up_percentage   Float?
+  sentiment_votes_down_percentage Float?
+  token                           Token? @relation(fields: [gecko_id], references: [gecko_id])
+}
+
+model GeckoFinance {
+  id                          Int    @id @default(autoincrement())
+  timestamp                   BigInt
+  gecko_id                    String @db.VarChar(64)
+  market_cap_usd              Int
+  market_cap_btc              Int
+  market_cap_rank             Int
+  fully_diluted_valuation     Int
+  total_supply                Int
+  max_supply                  Int
+  circulating_supply          Float
+  current_price               Float
+  high_24h_price              Float
+  low_24h_price               Float
+  price_change_24h            Float
+  price_change_percentage_24h Float
+  token                       Token? @relation(fields: [gecko_id], references: [gecko_id])
+}
+
+model Serum {
+  id          Int    @id @default(autoincrement())
+  timestamp   Int
+  market_name String @db.VarChar(256)
+  token_id    Int
+  token       Token? @relation(fields: [token_id], references: [id])
 }

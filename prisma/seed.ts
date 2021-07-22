@@ -1,27 +1,27 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from '../prisma/generated/prisma-client-js'
 // import {TokenCreateInput} from '../src/TokenResolver';
 
 const prisma = new PrismaClient()
 
 const tokenData: Prisma.TokenCreateInput[] = [
-  {
-    name: 'Solana',
-    symbol: 'SOL',
-    description: 'temp description of Solana',
-    sol_address: 'So11111111111111111111111111111111111111112',
-    gecko_id: 'solana',
-    website: 'solana.com',
-    twitter: 'twitter.com/solana'
-  },
-  {
-    name: 'Serum',
-    symbol: 'SRM',
-    description: 'temp description of Serum',
-    sol_address: 'SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt',
-    gecko_id: 'serum',
-    website: 'projectserum.com',
-    twitter: 'twitter.com/projectserum'
-  },
+  // {
+  //   name: 'Solana',
+  //   symbol: 'SOL',
+  //   description: 'temp description of Solana',
+  //   sol_address: 'So11111111111111111111111111111111111111112',
+  //   gecko_id: 'solana',
+  //   website: 'solana.com',
+  //   twitter: 'twitter.com/solana'
+  // },
+  // {
+  //   name: 'Serum',
+  //   symbol: 'SRM',
+  //   description: 'temp description of Serum',
+  //   sol_address: 'SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt',
+  //   gecko_id: 'serum',
+  //   website: 'projectserum.com',
+  //   twitter: 'twitter.com/projectserum'
+  // },
 
 ]
 
