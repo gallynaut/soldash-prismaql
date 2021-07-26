@@ -1,9 +1,23 @@
-import { CoinFullInfo } from 'coingecko-api-v3'
-import context, { Context } from '../context'
+import { CoinFullInfo, CoinListResponseItem, CoinMarket } from 'coingecko-api-v3'
+import { Context } from '../context'
+import { GeckoFinance } from '../../prisma/generated/prisma-client-js';
+import { getGeckoTimestamp } from '../common/utils';
+import { AddGeckoSocialInput } from './type';
+import { createGeckoSocialRecord } from './store';
+import { AddGeckoFinanceInput } from '../gecko_finance/type';
+import { createGeckoFinanceRecord } from '../gecko_finance/store';
 
+// Fetches gecko data with a delay
+export async function fetchGeckoSocialByIds( ctx: Context, ids: string[] ) {
+  const delay = (ms:number) => new Promise(res => setTimeout(res, ms))
+  for(const id of ids) {
+    fetchGeckoSocial(ctx, id)
+    await delay(5000);
+  }
+}
 
-export async function createGeckoSocial( ctx: Context, gecko_id: string ) {
-
+// Creates a GeckoSocial record from a given gecko_id
+export async function fetchGeckoSocial( ctx: Context, gecko_id: string ) {
   let geckoIdData: CoinFullInfo;
   try {
     geckoIdData = await ctx.gecko.coinId({id: gecko_id})
@@ -14,7 +28,7 @@ export async function createGeckoSocial( ctx: Context, gecko_id: string ) {
   const ts_date: Date = geckoIdData.last_updated
   const ts: number = ts_date === undefined || ts_date === null ? Date.now() : new Date(ts_date).getTime()
 
-  const parsedGeckoData = {
+  const parsedGeckoData: AddGeckoSocialInput = {
     timestamp: ts,
     gecko_id: geckoIdData.id,
     gecko_score: geckoIdData.coingecko_score,
@@ -25,36 +39,26 @@ export async function createGeckoSocial( ctx: Context, gecko_id: string ) {
     sentiment_votes_up_percentage: geckoIdData.sentiment_votes_up_percentage,
     sentiment_votes_down_percentage: geckoIdData.sentiment_votes_down_percentage,
   }
+  const newRecId = await createGeckoSocialRecord(ctx, parsedGeckoData)
+}
+
+// Fetches the top 250 coins from Gecko by marketcap
+export async function fetchGeckoCoinsTop250(ctx: Context) {
+  let geckoList: CoinMarket[];
   try {
-    const newRec = await ctx.prisma.geckoSocial.create({data: parsedGeckoData})
-    console.log("Added gecko social for ", gecko_id)
+    geckoList = await ctx.gecko.coinMarket({
+      vs_currency: "usd",
+      ids: "",
+      order: "market_cap_desc",
+      per_page: 250,
+      price_change_percentage: "24h"
+    })
   } catch(err) {
-    console.log(err)
+    console.log("couldnt fetch gecko list: ", err)
+    return
   }
+  return geckoList
 }
-export async function get_gecko_ids( ctx: Context, limit: number = 100 ) { 
-  const valid_gecko_ids = await ctx.prisma.token.findMany({
-    take: limit,
-    where: {
-      NOT: {
-        gecko_id: null,
-      }
-    },
-    select: {
-      gecko_id: true,
-    },
-    orderBy: {
-      id: 'asc'
-    },
-  })
-  return valid_gecko_ids.map((id) => id.gecko_id)
-}
-export async function fetch_gecko_social( ctx: Context, limit: number = 100 ) {
-  const ids = await get_gecko_ids(ctx, 100)
-  const delay = (ms:number) => new Promise(res => setTimeout(res, ms))
-  for(const id of ids) {
-    createGeckoSocial(ctx, id)
-    console.log("delay")
-    await delay(3000);
-  }
-}
+
+
+

@@ -11,8 +11,6 @@ import {
 import { Context } from '../context'
 import GeckoFinance from './type'
 
-
-
 @Resolver(GeckoFinance)
 export default class GeckoFinanceResolver {
 

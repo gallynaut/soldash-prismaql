@@ -58,18 +58,17 @@ model GeckoFinance {
   id                          Int    @id @default(autoincrement())
   timestamp                   BigInt
   gecko_id                    String @db.VarChar(64)
-  market_cap_usd              Int
-  market_cap_btc              Int
-  market_cap_rank             Int
-  fully_diluted_valuation     Int
-  total_supply                Int
-  max_supply                  Int
-  circulating_supply          Float
-  current_price               Float
-  high_24h_price              Float
-  low_24h_price               Float
-  price_change_24h            Float
-  price_change_percentage_24h Float
+  market_cap                  BigInt
+  market_cap_rank             BigInt?
+  fully_diluted_valuation     BigInt?
+  total_supply                Float?
+  max_supply                  Float?
+  circulating_supply          Float?
+  current_price               Float?
+  high_24h_price              Float?
+  low_24h_price               Float?
+  price_change_24h            Float?
+  price_change_percentage_24h Float?
   token                       Token? @relation(fields: [gecko_id], references: [gecko_id])
 }
 

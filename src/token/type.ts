@@ -50,7 +50,7 @@ export class TokenSocial {
 }
 
 @InputType({ description: "New token data" })
-class AddTokenInputInput implements Partial<Token> {
+export class AddTokenInput implements Partial<Token> {
   @Field()
   @Length(2, 64)
   name: string;
@@ -66,4 +66,22 @@ class AddTokenInputInput implements Partial<Token> {
   @Field({ nullable: true })
   @Length(2, 64)
   sol_address?: string;
+}
+
+@InputType({ description: "New token social data" })
+export class AddTokenSocialInput implements Partial<TokenSocial> {
+  @Field()
+  token_id: number;
+
+  @Field({ nullable: true })
+  @Length(2, 256)
+  website: string;
+
+  @Field({ nullable: true })
+  @Length(2, 256)
+  twitter: string;
+
+  @Field({ nullable: true })
+  @Length(2, 256)
+  logoURI: string;
 }

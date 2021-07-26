@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "GeckoFinance" ALTER COLUMN "market_cap_rank" SET DATA TYPE BIGINT,
+ALTER COLUMN "fully_diluted_valuation" SET DATA TYPE BIGINT,
+ALTER COLUMN "max_supply" SET DATA TYPE BIGINT,
+ALTER COLUMN "total_supply" SET DATA TYPE BIGINT,
+ALTER COLUMN "market_cap" SET DATA TYPE BIGINT;
