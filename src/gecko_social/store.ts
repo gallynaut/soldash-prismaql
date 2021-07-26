@@ -1,6 +1,6 @@
-import { GeckoSocial } from '../../prisma/generated/prisma-client-js';
+import { GeckoSocial } from '@prisma/client'
 import {Context} from '../context'
-import { AddGeckoSocialInput } from './type';
+import { AddGeckoSocialInput } from './type'
 
 export async function createGeckoSocialRecord(ctx: Context, newGeckoSocialData: AddGeckoSocialInput) {
   try {

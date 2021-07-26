@@ -1,6 +1,6 @@
 import { CoinFullInfo, CoinListResponseItem, CoinMarket } from 'coingecko-api-v3'
 import { Context } from '../context'
-import { GeckoFinance } from '../../prisma/generated/prisma-client-js';
+import { GeckoFinance } from '@prisma/client'
 import { getGeckoTimestamp } from '../common/utils';
 import { AddGeckoSocialInput } from './type';
 import { createGeckoSocialRecord } from './store';

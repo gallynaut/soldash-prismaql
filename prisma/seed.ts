@@ -1,4 +1,5 @@
-import { PrismaClient, Prisma } from '../prisma/generated/prisma-client-js'
+import {PrismaClient , Prisma} from '@prisma/client'
+// import { PrismaClient, Prisma } from './generated.old/prisma-client-js'
 // import {TokenCreateInput} from '../src/TokenResolver';
 
 const prisma = new PrismaClient()

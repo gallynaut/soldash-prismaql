@@ -1,4 +1,4 @@
-import { GeckoFinance } from '../../prisma/generated/prisma-client-js'
+import { GeckoFinance } from '@prisma/client'
 import {Context} from '../context'
 
 
