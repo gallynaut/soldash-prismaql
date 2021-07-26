@@ -3,7 +3,6 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -13,31 +12,9 @@ export type Scalars = {
   Float: number;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  create: Token;
-};
-
-
-export type MutationCreateArgs = {
-  data: TokenCreateInput;
-};
-
 export type Query = {
   __typename?: 'Query';
   tokens: Array<Token>;
-  findTokenBySymbol?: Maybe<Token>;
-  findTokenByAddress?: Maybe<Token>;
-};
-
-
-export type QueryFindTokenBySymbolArgs = {
-  symbol: Scalars['String'];
-};
-
-
-export type QueryFindTokenByAddressArgs = {
-  sol_address: Scalars['String'];
 };
 
 export type Token = {
@@ -48,13 +25,17 @@ export type Token = {
   description?: Maybe<Scalars['String']>;
   sol_address?: Maybe<Scalars['String']>;
   gecko_id?: Maybe<Scalars['String']>;
-  website?: Maybe<Scalars['String']>;
-  twitter?: Maybe<Scalars['String']>;
+  serum_id?: Maybe<Scalars['String']>;
+  social?: Maybe<TokenSocial>;
 };
 
-export type TokenCreateInput = {
-  name: Scalars['String'];
-  symbol: Scalars['String'];
+export type TokenSocial = {
+  __typename?: 'TokenSocial';
+  id: Scalars['ID'];
+  website: Scalars['String'];
+  twitter: Scalars['String'];
+  logoURI: Scalars['String'];
+  token_id: Scalars['Int'];
 };
 
 
@@ -140,34 +121,28 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   Token: ResolverTypeWrapper<Token>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  TokenCreateInput: TokenCreateInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  TokenSocial: ResolverTypeWrapper<TokenSocial>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Mutation: {};
   Query: {};
-  String: Scalars['String'];
   Token: Token;
   ID: Scalars['ID'];
-  TokenCreateInput: TokenCreateInput;
+  String: Scalars['String'];
+  TokenSocial: TokenSocial;
+  Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
-};
-
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  create?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationCreateArgs, 'data'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType>;
-  findTokenBySymbol?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryFindTokenBySymbolArgs, 'symbol'>>;
-  findTokenByAddress?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryFindTokenByAddressArgs, 'sol_address'>>;
 };
 
 export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
@@ -177,15 +152,24 @@ export type TokenResolvers<ContextType = any, ParentType extends ResolversParent
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sol_address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   gecko_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  twitter?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serum_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  social?: Resolver<Maybe<ResolversTypes['TokenSocial']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TokenSocialResolvers<ContextType = any, ParentType extends ResolversParentTypes['TokenSocial'] = ResolversParentTypes['TokenSocial']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  website?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  twitter?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  logoURI?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  token_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
-  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
+  TokenSocial?: TokenSocialResolvers<ContextType>;
 };
 
 

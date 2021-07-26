@@ -1,8 +1,8 @@
 overwrite: true
-schema: "https://soldash-prismaql-cu4q6.ondigitalocean.app"
+schema: "https://soldash-prismaql-z8hd7.ondigitalocean.app"
 documents: null
 generates:
-  src/graphql.ts:
+  ./src/graphql.ts:
     plugins:
       - "typescript"
       - "typescript-resolvers"

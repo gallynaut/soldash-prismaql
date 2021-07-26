@@ -28,12 +28,12 @@ export async function startup( ctx: Context ) {
     console.log("error with startup functions: ", err)
   }
 }
-startup(context)
+// startup(context)
 
 
 const app = async () => {
   const schema = await tq.buildSchema({
-    resolvers: [TokenResolver, GeckoFinanceResolver,GeckoSocialResolver,SerumResolver ],
+    resolvers: [TokenResolver,GeckoFinanceResolver,GeckoSocialResolver,SerumResolver ],
     scalarsMap: [{ type: GraphQLScalarType, scalar: TimestampResolver }]
   })
 

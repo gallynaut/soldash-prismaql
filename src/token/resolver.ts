@@ -6,59 +6,48 @@ import {
   Mutation,
   Arg,
   Ctx,
+  Int,
   InputType,
   Field,
   Root,
 } from 'type-graphql'
 import Token, { TokenSocial } from './type'
 import context, { Context } from '../context'
+import GeckoSocial from '../gecko_social/type'
 
 @Resolver(Token)
 export default class TokenResolver {
   @FieldResolver(type => TokenSocial, { nullable: true })
-  social(@Root() token: Token, @Ctx() ctx: Context) {    
-    
+  async social(@Root() token: Token, @Ctx() ctx: Context) {
+    return await ctx.prisma.tokenSocial.findUnique({where: {token_id: token.id}})
   }
 
-  // @Mutation((returns) => Token)
-  // async create(
-  //   @Ctx() ctx: Context,
-  //   @Arg('data') data: TokenCreateInput,
-  // ): Promise<Token> {
-
-  //   return ctx.prisma.token.create({data: {
-  //     name: data.name,
-  //     symbol: data.symbol,
-  //   }})
-  // }
+  @FieldResolver(type => [GeckoSocial], { nullable: true })
+  async geckoSocial(@Root() token: Token, @Ctx() ctx: Context) {
+    if(token.gecko_id) {
+      return await ctx.prisma.geckoSocial.findMany({where: {gecko_id: token.gecko_id}})
+    }
+  }
+  @FieldResolver(type => Int, { nullable: true })
+  async numGeckoSocialRecords(@Root() token: Token, @Ctx() ctx: Context) {
+    return (await ctx.prisma.geckoSocial.findMany({where: {gecko_id: token.gecko_id}})).length
+  }
   
   @Query(returns => [Token])
   async tokens(@Ctx() ctx: Context) {
     return ctx.prisma.token.findMany()
   }
-
-  // @Query((symbol) => Token, {nullable: true} )
-  // async findTokenBySymbol(
-  //   @Ctx() ctx: Context, 
-  //   @Arg("symbol") symbol: string
-  //   ): Promise<Token | null> {
-  //   return ctx.prisma.token.findUnique({
-  //     where: {
-  //       symbol: symbol,
-  //     },
-  //   })
-  // }
   
-  // @Query((sol_address) => Token, {nullable: true} )
-  // async findTokenByAddress(
-  //   @Ctx() ctx: Context, 
-  //   @Arg("sol_address") sol_address: string
-  //   ): Promise<Token | null> {
-  //   return ctx.prisma.token.findFirst({
-  //     where: {
-  //       sol_address: sol_address,
-  //     },
-  //   })
-  // }
+  @Query((gecko_id) => Token, {nullable: true} )
+  async findTokenByGeckoId(
+    @Ctx() ctx: Context, 
+    @Arg("gecko_id") gecko_id: string
+    ){
+    return ctx.prisma.token.findUnique({
+      where: {
+        gecko_id: gecko_id,
+      },
+    })
+  }
 
 }
