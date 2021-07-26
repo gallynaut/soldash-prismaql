@@ -1,7 +1,6 @@
 import { CoinMarket } from "coingecko-api-v3"
 import { getGeckoTimestamp } from "../common/utils"
 import { Context } from "../context"
-import { fetchGeckoCoinsTop250 } from "../gecko_social/utils"
 import { selectGeckoId, upsertToken } from "../token/store"
 import { AddTokenInput } from "../token/type"
 import { createGeckoFinanceRecord } from "./store"
