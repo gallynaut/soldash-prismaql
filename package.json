@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "ts-node-dev --no-notify --respawn --transpile-only src/index.ts",
     "prisma-build": "npx prisma generate",
-    "prisma-push": "npx prisma migrate deploy",
+    "prisma-push": "npx prisma migrate dev",
+    "prisma-push-prod": "npx prisma migrate deploy",
     "prisma-seed": "npx prisma db seed --preview-feature",
     "docker": "docker-compose up -d",
     "build": "tsc",
