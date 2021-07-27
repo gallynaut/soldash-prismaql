@@ -15,21 +15,26 @@ import {
 } from "./gecko_social/utils";
 import { CoinMarket } from "coingecko-api-v3";
 import { fetchGeckoFinance } from "./gecko_finance/utils";
+import { MIN1 } from "./common/contants";
+import { selectGeckoTop250 } from "./token/store";
 
 const port = parseInt(process.env.APP_PORT || "8080");
 
 export async function startup(ctx: Context) {
-  try {
-    // await check_sol_coins(context)
+  // await check_sol_coins(context)
+  const coins: CoinMarket[] = await fetchGeckoCoinsTop250(context);
+  fetchGeckoFinance(context, coins);
+  const top250 = await selectGeckoTop250(context);
+  await fetchGeckoSocialByIds(context, top250);
+
+  while (true) {
     const coins: CoinMarket[] = await fetchGeckoCoinsTop250(context);
-    const gecko_ids: string[] = coins.map((coin) => coin.id);
     fetchGeckoFinance(context, coins);
-    await fetchGeckoSocialByIds(context, gecko_ids);
-  } catch (err) {
-    console.log("error with startup functions: ", err);
+    const top250 = await selectGeckoTop250(context);
+    await fetchGeckoSocialByIds(context, top250);
   }
 }
-// startup(context)
+startup(context);
 
 const app = async () => {
   const schema = await tq.buildSchema({
@@ -60,7 +65,6 @@ app();
 ////    - Overall DB checks
 
 // fetch intervals and delays should be moved to environment variables
-const MIN = 1000 * 60;
 
 // setup utils
 // setInterval(() => {

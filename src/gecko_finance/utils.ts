@@ -35,7 +35,6 @@ export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
       price_change_24h: coin.price_change_24h,
       price_change_percentage_24h: coin.price_change_percentage_24h,
     };
-
     createGeckoFinanceRecord(ctx, newGeckoFinanceRecord);
   });
 }

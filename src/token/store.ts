@@ -48,6 +48,30 @@ export async function selectGeckoId(ctx: Context, gecko_id: string) {
   }
 }
 
+export async function selectGeckoTop250(ctx: Context): Promise<string[]> {
+  const result: any[] = await ctx.prisma.token.findMany({
+    include: {
+      gecko_finance: {
+        select: {
+          id: true,
+          market_cap_rank: true,
+          timestamp: true,
+        },
+        orderBy: {
+          timestamp: "asc",
+        },
+      },
+    },
+  });
+  const sortedResult = result.sort((a, b) =>
+    a.gecko_finance[0].market_cap_rank > b.gecko_finance[0].market_cap_rank
+      ? 1
+      : -1
+  );
+  const top250 = sortedResult.map((coin: any) => coin.gecko_id);
+  return top250;
+}
+
 // export async function selectGeckoId(ctx: Context, newToken: AddTokenInput) {
 //   const t = await ctx.prisma.token.findUnique({where: {gecko_id: newToken.gecko_id}})
 //   if(t.id) {

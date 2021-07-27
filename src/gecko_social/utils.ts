@@ -16,7 +16,7 @@ export async function fetchGeckoSocialByIds(ctx: Context, ids: string[]) {
   const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
   for (const id of ids) {
     fetchGeckoSocial(ctx, id);
-    await delay(5000);
+    await delay(2000);
   }
 }
 
@@ -29,14 +29,9 @@ export async function fetchGeckoSocial(ctx: Context, gecko_id: string) {
     console.log("couldnt fetch gecko data: ", err);
     return;
   }
-  const ts_date: Date = geckoIdData.last_updated;
-  const ts: number =
-    ts_date === undefined || ts_date === null
-      ? Date.now()
-      : new Date(ts_date).getTime();
 
   const parsedGeckoData: AddGeckoSocialInput = {
-    timestamp: ts,
+    timestamp: getGeckoTimestamp(geckoIdData.last_updated),
     gecko_id: geckoIdData.id,
     gecko_score: geckoIdData.coingecko_score,
     gecko_rank: geckoIdData.coingecko_rank,
@@ -47,7 +42,7 @@ export async function fetchGeckoSocial(ctx: Context, gecko_id: string) {
     sentiment_votes_down_percentage:
       geckoIdData.sentiment_votes_down_percentage,
   };
-  const newRecId = await createGeckoSocialRecord(ctx, parsedGeckoData);
+  createGeckoSocialRecord(ctx, parsedGeckoData);
 }
 
 // Fetches the top 250 coins from Gecko by marketcap

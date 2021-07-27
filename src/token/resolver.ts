@@ -24,6 +24,31 @@ export default class TokenResolver {
     });
   }
 
+  @FieldResolver((type) => Int, { nullable: true })
+  async market_cap(@Root() token: Token, @Ctx() ctx: Context) {
+    const fifteenMinAgo = Date.now() - 15 * 60 * 60 * 1000;
+    const recentRecords = await ctx.prisma.geckoFinance.findMany({
+      where: {
+        AND: [
+          {
+            gecko_id: token.gecko_id,
+          },
+          {
+            timestamp: {
+              gte: fifteenMinAgo,
+            },
+          },
+        ],
+      },
+    });
+    if (recentRecords.length > 0) {
+      return recentRecords[0].market_cap;
+    } else {
+      return;
+    }
+    return;
+  }
+
   @FieldResolver((type) => [GeckoSocial], { nullable: true })
   async geckoSocial(@Root() token: Token, @Ctx() ctx: Context) {
     if (token.gecko_id) {

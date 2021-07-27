@@ -11,45 +11,45 @@ export default class GeckoFinance {
   timestamp: BigInt;
 
   @Field()
+  @Length(2, 64)
   gecko_id: string;
 
-  @Field((type) => Int)
-  market_cap: number;
+  @Field((type) => Int, { nullable: true })
+  market_cap: number | null;
 
-  @Field((type) => Int)
-  market_cap_rank: number;
+  @Field((type) => Int, { nullable: true })
+  market_cap_rank: number | null;
 
-  @Field((type) => Int)
+  @Field((type) => Int, { nullable: true })
   fully_diluted_valuation: number | null;
 
-  @Field((type) => Int)
+  @Field((type) => Int, { nullable: true })
   total_supply: number | null;
 
-  @Field((type) => Int)
+  @Field((type) => Int, { nullable: true })
   max_supply: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   circulating_supply: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   current_price: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   high_24h_price: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   low_24h_price: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   price_change_24h: number | null;
 
-  @Field((type) => Float)
+  @Field((type) => Float, { nullable: true })
   price_change_percentage_24h: number | null;
 }
 @InputType({ description: "New gecko finance data" })
 export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
   @Field()
-  @Length(2, 64)
   gecko_id: string;
 
   @Field()

@@ -4,7 +4,7 @@ import { AddGeckoSocialInput } from "./type";
 
 export async function createGeckoSocialRecord(
   ctx: Context,
-  newGeckoSocialData: AddGeckoSocialInput
+  newGeckoSocialData: AddGeckoSocialInput | any
 ) {
   try {
     const newRecord: GeckoSocial = await ctx.prisma.geckoSocial.create({

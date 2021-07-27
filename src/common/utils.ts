@@ -1,7 +1,9 @@
-export function getGeckoTimestamp(d: Date) {
+export function getGeckoTimestamp(d: Date | string): BigInt {
+  const date: Date = new Date(d);
   try {
-    return d.getTime();
-  } catch {
-    return 0;
+    return BigInt(date.getTime());
+  } catch (err) {
+    console.log("Timestamp Err: ", err);
+    return BigInt(0);
   }
 }
