@@ -1,7 +1,8 @@
 {
   "name": "soldash-prismaql",
   "scripts": {
-    "dev": "ts-node-dev --no-notify --respawn --transpile-only src/index.ts",
+    "dev": "ts-node-dev --respawn --no-notify --transpile-only src/index.ts",
+    "start": "tsc && node dist/index.js",
     "prisma-build": "npx prisma generate",
     "prisma-push": "npx prisma migrate dev",
     "prisma-push-prod": "npx prisma migrate deploy",

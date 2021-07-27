@@ -4,6 +4,7 @@ import {
   FieldResolver,
   Query,
   Mutation,
+  Float,
   Arg,
   Ctx,
   Int,
@@ -24,8 +25,8 @@ export default class TokenResolver {
     });
   }
 
-  @FieldResolver((type) => Int, { nullable: true })
-  async market_cap(@Root() token: Token, @Ctx() ctx: Context) {
+  @FieldResolver((type) => Float, { nullable: true })
+  async market_cap(@Root() token: Token, @Ctx() ctx: Context): Promise<number> {
     const fifteenMinAgo = Date.now() - 15 * 60 * 60 * 1000;
     const recentRecords = await ctx.prisma.geckoFinance.findMany({
       where: {
@@ -42,11 +43,11 @@ export default class TokenResolver {
       },
     });
     if (recentRecords.length > 0) {
-      return recentRecords[0].market_cap;
+      return Number(recentRecords[0].market_cap);
     } else {
+      // request new data
       return;
     }
-    return;
   }
 
   @FieldResolver((type) => [GeckoSocial], { nullable: true })

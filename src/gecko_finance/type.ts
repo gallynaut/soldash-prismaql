@@ -14,7 +14,7 @@ export default class GeckoFinance {
   @Length(2, 64)
   gecko_id: string;
 
-  @Field((type) => Int, { nullable: true })
+  @Field((type) => Float, { nullable: true })
   market_cap: number | null;
 
   @Field((type) => Int, { nullable: true })
@@ -52,7 +52,7 @@ export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
   @Field()
   gecko_id: string;
 
-  @Field()
+  @Field((type) => Date)
   timestamp: BigInt;
 
   @Field({ nullable: true })
