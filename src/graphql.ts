@@ -1,8 +1,9 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -10,11 +11,35 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
+};
+
+
+export type GeckoSocial = {
+  __typename?: 'GeckoSocial';
+  id: Scalars['ID'];
+  timestamp: Scalars['DateTime'];
+  gecko_id: Scalars['String'];
+  gecko_score?: Maybe<Scalars['Float']>;
+  gecko_rank?: Maybe<Scalars['Int']>;
+  alexa_rank?: Maybe<Scalars['Int']>;
+  public_interest_score?: Maybe<Scalars['Float']>;
+  liquidity_score?: Maybe<Scalars['Float']>;
+  sentiment_votes_up_percentage?: Maybe<Scalars['Float']>;
+  sentiment_votes_down_percentage?: Maybe<Scalars['Float']>;
+  token?: Maybe<Token>;
 };
 
 export type Query = {
   __typename?: 'Query';
   tokens: Array<Token>;
+  findTokenByGeckoId?: Maybe<Token>;
+};
+
+
+export type QueryFindTokenByGeckoIdArgs = {
+  gecko_id: Scalars['String'];
 };
 
 export type Token = {
@@ -27,6 +52,9 @@ export type Token = {
   gecko_id?: Maybe<Scalars['String']>;
   serum_id?: Maybe<Scalars['String']>;
   social?: Maybe<TokenSocial>;
+  market_cap?: Maybe<Scalars['Float']>;
+  geckoSocial?: Maybe<Array<GeckoSocial>>;
+  numGeckoSocialRecords?: Maybe<Scalars['Int']>;
 };
 
 export type TokenSocial = {
@@ -121,28 +149,54 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
-  Token: ResolverTypeWrapper<Token>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  GeckoSocial: ResolverTypeWrapper<GeckoSocial>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  TokenSocial: ResolverTypeWrapper<TokenSocial>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Query: ResolverTypeWrapper<{}>;
+  Token: ResolverTypeWrapper<Token>;
+  TokenSocial: ResolverTypeWrapper<TokenSocial>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
-  Token: Token;
+  DateTime: Scalars['DateTime'];
+  GeckoSocial: GeckoSocial;
   ID: Scalars['ID'];
   String: Scalars['String'];
-  TokenSocial: TokenSocial;
+  Float: Scalars['Float'];
   Int: Scalars['Int'];
+  Query: {};
+  Token: Token;
+  TokenSocial: TokenSocial;
   Boolean: Scalars['Boolean'];
+};
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type GeckoSocialResolvers<ContextType = any, ParentType extends ResolversParentTypes['GeckoSocial'] = ResolversParentTypes['GeckoSocial']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  gecko_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  gecko_score?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  gecko_rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  alexa_rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  public_interest_score?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  liquidity_score?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  sentiment_votes_up_percentage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  sentiment_votes_down_percentage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType>;
+  findTokenByGeckoId?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryFindTokenByGeckoIdArgs, 'gecko_id'>>;
 };
 
 export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
@@ -154,6 +208,9 @@ export type TokenResolvers<ContextType = any, ParentType extends ResolversParent
   gecko_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   serum_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   social?: Resolver<Maybe<ResolversTypes['TokenSocial']>, ParentType, ContextType>;
+  market_cap?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  geckoSocial?: Resolver<Maybe<Array<ResolversTypes['GeckoSocial']>>, ParentType, ContextType>;
+  numGeckoSocialRecords?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -167,6 +224,8 @@ export type TokenSocialResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type Resolvers<ContextType = any> = {
+  DateTime?: GraphQLScalarType;
+  GeckoSocial?: GeckoSocialResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
   TokenSocial?: TokenSocialResolvers<ContextType>;
