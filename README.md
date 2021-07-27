@@ -50,7 +50,6 @@ Now, seed the database with the sample data in [`prisma/seed.ts`](./prisma/seed.
 npx prisma db seed --preview-feature
 ```
 
-
 ### 3. Start the GraphQL server
 
 Launch your GraphQL server with this command:
@@ -100,11 +99,7 @@ query {
 
 ```graphql
 mutation {
-  signupUser(data: {
-    name: "Sarah",
-    email: "sarah@prisma.io"
-    }
-  ) {
+  signupUser(data: { name: "Sarah", email: "sarah@prisma.io" }) {
     id
   }
 }
@@ -116,7 +111,7 @@ mutation {
 mutation {
   createDraft(
     data: {
-      title: "Join the Prisma Slack",
+      title: "Join the Prisma Slack"
       content: "https://slack.prisma.io"
       email: "alice@prisma.io"
     }
@@ -192,7 +187,6 @@ mutation {
 
 </Details>
 
-
 ## Evolving the app
 
 Evolving the application typically requires two steps:
@@ -219,8 +213,8 @@ model Post {
 }
 
 model User {
-  id      Int      @default(autoincrement()) @id 
-  name    String? 
+  id      Int      @default(autoincrement()) @id
+  name    String?
   email   String   @unique
   posts   Post[]
 + profile Profile?
@@ -339,11 +333,14 @@ Run the following mutation to create a user with a profile:
 
 ```graphql
 mutation {
-  signupUser(data: {
-    email:"katla@prisma.io", 
-    profile: { bio: "Sometimes I'm an Icelandic volcano, sometimes I'm a dragon from a book."}
-  })
-  {
+  signupUser(
+    data: {
+      email: "katla@prisma.io"
+      profile: {
+        bio: "Sometimes I'm an Icelandic volcano, sometimes I'm a dragon from a book."
+      }
+    }
+  ) {
     id
     email
     posts {
@@ -423,10 +420,9 @@ const userWithUpdatedProfile = await prisma.user.update({
 });
 ```
 
-
 ## Switch to another database (e.g. PostgreSQL, MySQL, SQL Server)
 
-If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block. 
+If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block.
 
 Learn more about the different connection configurations in the [docs](https://www.prisma.io/docs/reference/database-reference/connection-urls).
 

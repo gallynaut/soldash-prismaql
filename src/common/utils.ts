@@ -1,10 +1,7 @@
-
-
 export function getGeckoTimestamp(d: Date) {
-  try{
-    return d.getTime()
+  try {
+    return d.getTime();
   } catch {
-    return 0
+    return 0;
   }
 }
-

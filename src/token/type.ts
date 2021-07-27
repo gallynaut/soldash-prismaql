@@ -1,52 +1,52 @@
-import 'reflect-metadata'
-import { ObjectType, Field, ID, Int, InputType } from 'type-graphql'
-import {Length} from 'class-validator'
+import "reflect-metadata";
+import { ObjectType, Field, ID, Int, InputType } from "type-graphql";
+import { Length } from "class-validator";
 
 @ObjectType()
 export default class Token {
   @Field((type) => ID)
-  id: number
+  id: number;
 
   @Field()
-  name: string
+  name: string;
 
   @Field()
-  symbol: string
+  symbol: string;
 
-  @Field({nullable: true})
-  description: string
+  @Field({ nullable: true })
+  description: string;
 
-  @Field({nullable: true})
-  sol_address: string
+  @Field({ nullable: true })
+  sol_address: string;
 
-  @Field({nullable: true})
-  gecko_id: string
+  @Field({ nullable: true })
+  gecko_id: string;
 
-  @Field({nullable: true})
-  serum_id: string
+  @Field({ nullable: true })
+  serum_id: string;
 
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 @ObjectType()
 export class TokenSocial {
   @Field((type) => ID)
-  id: number
+  id: number;
 
   @Field()
-  website: string
+  website: string;
 
   @Field()
-  twitter: string
+  twitter: string;
 
   @Field()
-  logoURI: string
+  logoURI: string;
 
   @Field((type) => Int)
-  token_id: number
+  token_id: number;
 
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @InputType({ description: "New token data" })

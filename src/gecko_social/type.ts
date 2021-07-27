@@ -1,40 +1,39 @@
-import 'reflect-metadata'
-import { ObjectType, InputType, Field, ID, Float, Int } from 'type-graphql'
-import {Length} from 'class-validator'
+import "reflect-metadata";
+import { ObjectType, InputType, Field, ID, Float, Int } from "type-graphql";
+import { Length } from "class-validator";
 
 @ObjectType()
 export default class GeckoSocial {
   @Field((type) => ID)
-  id: number
+  id: number;
 
   @Field((type) => Date)
-  timestamp: BigInt 
+  timestamp: BigInt;
 
   @Field()
-  gecko_id: string 
+  gecko_id: string;
 
   @Field((type) => Float, { nullable: true })
-  gecko_score: number | null
+  gecko_score: number | null;
 
   @Field((type) => Int, { nullable: true })
-  gecko_rank: number | null
+  gecko_rank: number | null;
 
   @Field((type) => Int, { nullable: true })
-  alexa_rank: number | null
+  alexa_rank: number | null;
 
   @Field((type) => Float, { nullable: true })
-  public_interest_score: number | null
+  public_interest_score: number | null;
 
   @Field((type) => Float, { nullable: true })
-  liquidity_score: number | null
+  liquidity_score: number | null;
 
   @Field((type) => Float, { nullable: true })
-  sentiment_votes_up_percentage: number | null
+  sentiment_votes_up_percentage: number | null;
 
   @Field((type) => Float, { nullable: true })
-  sentiment_votes_down_percentage: number | null
+  sentiment_votes_down_percentage: number | null;
 }
-
 
 @InputType({ description: "New gecko social data" })
 export class AddGeckoSocialInput implements Partial<GeckoSocial> {
@@ -43,26 +42,26 @@ export class AddGeckoSocialInput implements Partial<GeckoSocial> {
   gecko_id: string;
 
   @Field((type) => Date)
-  timestamp: BigInt
+  timestamp: BigInt;
 
-  @Field((type) => Float,{ nullable: true })
-  gecko_score: number | null
+  @Field((type) => Float, { nullable: true })
+  gecko_score: number | null;
 
   @Field((type) => Int, { nullable: true })
-  gecko_rank: number | null
+  gecko_rank: number | null;
 
   @Field((type) => Int, { nullable: true })
-  alexa_rank: number | null
+  alexa_rank: number | null;
 
   @Field((type) => Float, { nullable: true })
-  public_interest_score: number | null
+  public_interest_score: number | null;
 
   @Field((type) => Float, { nullable: true })
-  liquidity_score: number | null
+  liquidity_score: number | null;
 
   @Field((type) => Float, { nullable: true })
-  sentiment_votes_up_percentage: number | null
+  sentiment_votes_up_percentage: number | null;
 
   @Field((type) => Float, { nullable: true })
-  sentiment_votes_down_percentage: number | null
+  sentiment_votes_down_percentage: number | null;
 }

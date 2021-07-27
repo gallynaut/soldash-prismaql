@@ -1,50 +1,50 @@
-import 'reflect-metadata'
-import { ObjectType, InputType, Field, ID, Float, Int } from 'type-graphql'
-import {Length} from 'class-validator'
+import "reflect-metadata";
+import { ObjectType, InputType, Field, ID, Float, Int } from "type-graphql";
+import { Length } from "class-validator";
 
 @ObjectType()
 export default class GeckoFinance {
   @Field((type) => ID)
-  id: number
+  id: number;
 
   @Field((type) => Date)
-  timestamp: BigInt 
+  timestamp: BigInt;
 
   @Field()
-  gecko_id: string
+  gecko_id: string;
 
   @Field((type) => Int)
-  market_cap: number
+  market_cap: number;
 
   @Field((type) => Int)
-  market_cap_rank: number
+  market_cap_rank: number;
 
   @Field((type) => Int)
-  fully_diluted_valuation: number | null
+  fully_diluted_valuation: number | null;
 
   @Field((type) => Int)
-  total_supply: number | null
+  total_supply: number | null;
 
   @Field((type) => Int)
-  max_supply: number | null
+  max_supply: number | null;
 
   @Field((type) => Float)
-  circulating_supply: number | null
+  circulating_supply: number | null;
 
   @Field((type) => Float)
-  current_price: number | null
+  current_price: number | null;
 
   @Field((type) => Float)
-  high_24h_price: number | null
+  high_24h_price: number | null;
 
   @Field((type) => Float)
-  low_24h_price: number | null
+  low_24h_price: number | null;
 
   @Field((type) => Float)
-  price_change_24h: number | null
+  price_change_24h: number | null;
 
   @Field((type) => Float)
-  price_change_percentage_24h: number | null
+  price_change_percentage_24h: number | null;
 }
 @InputType({ description: "New gecko finance data" })
 export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
@@ -53,38 +53,38 @@ export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
   gecko_id: string;
 
   @Field()
-  timestamp: BigInt
+  timestamp: BigInt;
 
   @Field({ nullable: true })
-  market_cap: number | null
+  market_cap: number | null;
 
   @Field({ nullable: true })
-  market_cap_rank: number | null
+  market_cap_rank: number | null;
 
   @Field({ nullable: true })
-  fully_diluted_valuation: number | null
+  fully_diluted_valuation: number | null;
 
   @Field({ nullable: true })
-  total_supply: number | null
+  total_supply: number | null;
 
   @Field({ nullable: true })
-  max_supply: number | null
+  max_supply: number | null;
 
   @Field({ nullable: true })
-  circulating_supply: number | null
+  circulating_supply: number | null;
 
   @Field({ nullable: true })
-  current_price: number | null
-  
-  @Field({ nullable: true })
-  high_24h_price: number | null
+  current_price: number | null;
 
   @Field({ nullable: true })
-  low_24h_price: number | null
+  high_24h_price: number | null;
 
   @Field({ nullable: true })
-  price_change_24h: number | null
+  low_24h_price: number | null;
 
   @Field({ nullable: true })
-  price_change_percentage_24h: number | null
+  price_change_24h: number | null;
+
+  @Field({ nullable: true })
+  price_change_percentage_24h: number | null;
 }

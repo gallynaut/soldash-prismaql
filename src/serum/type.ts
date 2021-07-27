@@ -1,17 +1,17 @@
-import 'reflect-metadata'
-import { ObjectType, Field, ID, Float, Int } from 'type-graphql'
+import "reflect-metadata";
+import { ObjectType, Field, ID, Float, Int } from "type-graphql";
 
 @ObjectType()
 export default class Serum {
   @Field((type) => ID)
-  id: number
+  id: number;
 
   @Field((type) => Date)
-  timestamp: number 
+  timestamp: number;
 
   @Field()
-  market_name: string
+  market_name: string;
 
   @Field((type) => Int)
-  token_id: string
+  token_id: string;
 }

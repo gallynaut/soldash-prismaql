@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+import "reflect-metadata";
 import {
   Resolver,
   Query,
@@ -7,12 +7,9 @@ import {
   Ctx,
   InputType,
   Field,
-} from 'type-graphql'
-import { Context } from '../context'
-import GeckoFinance from './type'
+} from "type-graphql";
+import { Context } from "../context";
+import GeckoFinance from "./type";
 
 @Resolver(GeckoFinance)
-export default class GeckoFinanceResolver {
-
-
-}
+export default class GeckoFinanceResolver {}

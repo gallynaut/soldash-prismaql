@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+import "reflect-metadata";
 import {
   Resolver,
   Query,
@@ -7,15 +7,10 @@ import {
   Ctx,
   InputType,
   Field,
-} from 'type-graphql'
-import Token from './type'
-import { Context } from '../context'
-import Serum from './type'
-
-
+} from "type-graphql";
+import Token from "./type";
+import { Context } from "../context";
+import Serum from "./type";
 
 @Resolver(Serum)
-export default class SerumResolver {
-
-
-}
+export default class SerumResolver {}
