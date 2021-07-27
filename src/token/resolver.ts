@@ -15,8 +15,9 @@ import {
 import Token, { TokenSocial } from "./type";
 import context, { Context } from "../context";
 import GeckoSocial from "../gecko_social/type";
-import { GeckoFinance as PrismaGeckoFinance } from "@prisma/client";
-import { MIN1, MIN15 } from "../common/contants";
+import { GeckoFinance as PrismaGeckoFinance, GeckoSocial as PrismaGeckoSocial } from "@prisma/client";
+import { HR1, MIN1, MIN15 } from "../common/contants";
+// import { selectGeckoTop250Rank } from "./store";
 
 @Resolver(Token)
 export default class TokenResolver {
@@ -93,6 +94,68 @@ export default class TokenResolver {
     }
   }
 
+  @FieldResolver((type) => Float, { nullable: true })
+  async upvotes(@Root() token: Token, @Ctx() ctx: Context): Promise<number> {
+    const oneHourAgo = Date.now() - HR1;
+    const recentRecord: PrismaGeckoSocial =
+      await ctx.prisma.geckoSocial.findFirst({
+        where: {
+          AND: [
+            {
+              gecko_id: token.gecko_id,
+            },
+            {
+              timestamp: {
+                gte: oneHourAgo,
+              },
+            },
+          ],
+        },
+        orderBy: {
+          timestamp: "desc",
+        },
+      });
+
+    if (recentRecord && recentRecord.sentiment_votes_up_percentage !== null) {
+      return recentRecord.sentiment_votes_up_percentage
+    } else {
+      // TO DO: request new data
+      // for now null to catch interval bugs
+      return;
+    }
+  }
+
+  @FieldResolver((type) => Int, { nullable: true })
+  async rank(@Root() token: Token, @Ctx() ctx: Context): Promise<number> {
+    const oneHourAgo = Date.now() - HR1;
+    const recentRecord: PrismaGeckoSocial =
+      await ctx.prisma.geckoSocial.findFirst({
+        where: {
+          AND: [
+            {
+              gecko_id: token.gecko_id,
+            },
+            {
+              timestamp: {
+                gte: oneHourAgo,
+              },
+            },
+          ],
+        },
+        orderBy: {
+          timestamp: "desc",
+        },
+      });
+
+    if (recentRecord && recentRecord.gecko_rank !== null) {
+      return recentRecord.gecko_rank
+    } else {
+      // TO DO: request new data
+      // for now null to catch interval bugs
+      return;
+    }
+  }
+
   @FieldResolver((type) => [GeckoSocial], { nullable: true })
   async geckoSocial(@Root() token: Token, @Ctx() ctx: Context) {
     if (token.gecko_id) {
@@ -133,6 +196,10 @@ export default class TokenResolver {
     );
     return sortedResult;
   }
+  // @Query(() => [Token])
+  // async top250GeckoRank(@Ctx() ctx: Context) {
+  //   return await selectGeckoTop250Rank(ctx)
+  // }
 
   @Query((gecko_id) => Token, { nullable: true })
   async findTokenByGeckoId(

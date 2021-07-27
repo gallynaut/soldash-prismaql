@@ -1,3 +1,4 @@
+import { GeckoSocial as PrismaGeckoSocial} from "@prisma/client";
 import { Context } from "../context";
 import Token, { AddTokenInput, TokenSocial, AddTokenSocialInput } from "./type";
 
@@ -71,6 +72,35 @@ export async function selectGeckoTop250(ctx: Context): Promise<string[]> {
   const top250 = sortedResult.map((coin: any) => coin.gecko_id);
   return top250;
 }
+
+// export async function selectGeckoTop250Rank(ctx: Context) {
+//   const result: (Token & {gecko_social: PrismaGeckoSocial[]})[]  = await ctx.prisma.token.findMany({
+//     include: {
+//       gecko_social: {
+//         orderBy: {
+//           timestamp: "asc",
+//         },
+//       },
+//     },
+//   });
+//   const sortedResult = result.sort((a, b) => {
+//      a.gecko_social[0].gecko_rank > b.gecko_social[0].gecko_rank ? 1 : -1
+//     }
+//   );
+//   console.log("SORTED: ", sortedResult.length)
+//   return sortedResult;
+// }
+// function compare_gecko_ranks(a,b) {
+
+//   // if (a is less than b by some ordering criterion) {
+//   //   return -1;
+//   // }
+//   // if (a is greater than b by the ordering criterion) {
+//   //   return 1;
+//   // }
+//   // a must be equal to b
+//   return 0;
+// }
 
 // export async function selectGeckoId(ctx: Context, newToken: AddTokenInput) {
 //   const t = await ctx.prisma.token.findUnique({where: {gecko_id: newToken.gecko_id}})
