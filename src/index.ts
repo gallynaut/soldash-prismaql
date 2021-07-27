@@ -47,7 +47,7 @@ const app = async () => {
     scalarsMap: [{ type: GraphQLScalarType, scalar: TimestampResolver }],
   });
 
-  new ApolloServer({ schema, context: context, cors: false }).listen(
+  new ApolloServer({ schema, context: context, cors: true }).listen(
     { port: port },
     () =>
       console.log(
