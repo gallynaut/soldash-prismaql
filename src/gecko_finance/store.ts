@@ -18,3 +18,9 @@ export async function createGeckoFinanceRecord(
   }
   return null;
 }
+
+// export async function getLatestGeckoFinanceRecord(  
+//   ctx: Context,
+//   gecko_id: string): Promise<GeckoFinance | null> {
+
+//   }

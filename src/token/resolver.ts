@@ -17,6 +17,7 @@ import context, { Context } from "../context";
 import GeckoSocial from "../gecko_social/type";
 import { GeckoFinance as PrismaGeckoFinance, GeckoSocial as PrismaGeckoSocial } from "@prisma/client";
 import { HR1, MIN1, MIN15 } from "../common/contants";
+import GeckoFinance from "../gecko_finance/type";
 // import { selectGeckoTop250Rank } from "./store";
 
 @Resolver(Token)
@@ -156,14 +157,33 @@ export default class TokenResolver {
     }
   }
 
-  @FieldResolver((type) => [GeckoSocial], { nullable: true })
+  @FieldResolver((type) => GeckoSocial, { nullable: true })
   async geckoSocial(@Root() token: Token, @Ctx() ctx: Context) {
     if (token.gecko_id) {
-      return await ctx.prisma.geckoSocial.findMany({
-        where: { gecko_id: token.gecko_id },
+      return await ctx.prisma.geckoSocial.findFirst({
+        where: { 
+          gecko_id: token.gecko_id 
+        },
+        orderBy: {
+          timestamp: "desc"
+        }
       });
     }
   }
+  @FieldResolver((type) => GeckoFinance, { nullable: true })
+  async geckoFinance(@Root() token: Token, @Ctx() ctx: Context) {
+    if (token.gecko_id) {
+      return await ctx.prisma.geckoFinance.findFirst({
+        where: { 
+          gecko_id: token.gecko_id 
+        },
+        orderBy: {
+          timestamp: "desc"
+        }
+      });
+    }
+  }
+
   @FieldResolver((type) => Int, { nullable: true })
   async numGeckoSocialRecords(@Root() token: Token, @Ctx() ctx: Context) {
     return (

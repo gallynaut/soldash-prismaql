@@ -23,8 +23,8 @@ export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
     const newGeckoFinanceRecord: AddGeckoFinanceInput = {
       timestamp: getGeckoTimestamp(coin.last_updated),
       gecko_id: coin.id,
-      market_cap: coin.market_cap,
-      market_cap_rank: coin.market_cap_rank,
+      market_cap: BigInt(coin.market_cap),
+      market_cap_rank: BigInt(coin.market_cap_rank),
       fully_diluted_valuation: coin.fully_diluted_valuation,
       total_supply: coin.total_supply,
       max_supply: coin.max_supply,

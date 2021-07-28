@@ -1,13 +1,14 @@
 import "reflect-metadata";
 import { ObjectType, InputType, Field, ID, Float, Int } from "type-graphql";
 import { Length } from "class-validator";
+import GraphQLBigInt from "graphql-bigint"
 
 @ObjectType()
 export default class GeckoSocial {
   @Field((type) => ID)
   id: number;
 
-  @Field((type) => Date)
+  @Field((type) => GraphQLBigInt)
   timestamp: BigInt;
 
   @Field()
@@ -41,7 +42,7 @@ export class AddGeckoSocialInput implements Partial<GeckoSocial> {
   @Length(2, 64)
   gecko_id: string;
 
-  @Field((type) => Date)
+  @Field((type) => GraphQLBigInt)
   timestamp: BigInt;
 
   @Field((type) => Float, { nullable: true })

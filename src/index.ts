@@ -15,7 +15,7 @@ import {
 } from "./gecko_social/utils";
 import { CoinMarket } from "coingecko-api-v3";
 import { fetchGeckoFinance } from "./gecko_finance/utils";
-import { MIN1 } from "./common/contants";
+import { MIN1, MIN15 } from "./common/contants";
 import { selectGeckoTop250 } from "./token/store";
 
 const port = parseInt(process.env.APP_PORT || "8080");
@@ -34,7 +34,7 @@ export async function startup(ctx: Context) {
     await fetchGeckoSocialByIds(context, top250);
   }
 }
-startup(context);
+// startup(context);
 
 const app = async () => {
   const schema = await tq.buildSchema({
@@ -66,13 +66,16 @@ app();
 
 // fetch intervals and delays should be moved to environment variables
 
-// setup utils
-// setInterval(() => {
-// fetch_gecko_data();
-// }, MIN*5)
+setInterval(async () => {
+    const coins: CoinMarket[] = await fetchGeckoCoinsTop250(context);
+    fetchGeckoFinance(context, coins);
+}, MIN15)
 
-// setTimeout(() => {
-//   setInterval(() => {
-//   fetch_tokens();
-//   }, MIN*5)
-// }, MIN*2.5)
+
+// fetch gecko social every hour with a 5min delay
+setTimeout(() => {
+  setInterval(async () => {
+    const top250 = await selectGeckoTop250(context);
+    await fetchGeckoSocialByIds(context, top250);
+  }, MIN1*60)
+}, MIN1*5)

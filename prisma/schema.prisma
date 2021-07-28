@@ -74,7 +74,7 @@ model GeckoFinance {
 
 model Serum {
   id          Int    @id @default(autoincrement())
-  timestamp   Int
+  timestamp   BigInt
   market_name String @db.VarChar(256)
   token_id    Int
   token       Token? @relation(fields: [token_id], references: [id])

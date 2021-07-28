@@ -34,6 +34,7 @@ export type GeckoSocial = {
 export type Query = {
   __typename?: 'Query';
   tokens: Array<Token>;
+  tokensTop250: Array<Token>;
   findTokenByGeckoId?: Maybe<Token>;
 };
 
@@ -53,6 +54,9 @@ export type Token = {
   serum_id?: Maybe<Scalars['String']>;
   social?: Maybe<TokenSocial>;
   market_cap?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  upvotes?: Maybe<Scalars['Float']>;
+  rank?: Maybe<Scalars['Int']>;
   geckoSocial?: Maybe<Array<GeckoSocial>>;
   numGeckoSocialRecords?: Maybe<Scalars['Int']>;
 };
@@ -196,6 +200,7 @@ export type GeckoSocialResolvers<ContextType = any, ParentType extends Resolvers
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType>;
+  tokensTop250?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType>;
   findTokenByGeckoId?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryFindTokenByGeckoIdArgs, 'gecko_id'>>;
 };
 
@@ -209,6 +214,9 @@ export type TokenResolvers<ContextType = any, ParentType extends ResolversParent
   serum_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   social?: Resolver<Maybe<ResolversTypes['TokenSocial']>, ParentType, ContextType>;
   market_cap?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  upvotes?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   geckoSocial?: Resolver<Maybe<Array<ResolversTypes['GeckoSocial']>>, ParentType, ContextType>;
   numGeckoSocialRecords?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

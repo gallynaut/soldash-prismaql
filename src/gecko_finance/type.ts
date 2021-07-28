@@ -1,24 +1,25 @@
 import "reflect-metadata";
 import { ObjectType, InputType, Field, ID, Float, Int } from "type-graphql";
 import { Length } from "class-validator";
+import GraphQLBigInt from "graphql-bigint"
 
 @ObjectType()
 export default class GeckoFinance {
   @Field((type) => ID)
   id: number;
 
-  @Field((type) => Date)
+  @Field((type) => GraphQLBigInt)
   timestamp: BigInt;
 
   @Field()
   @Length(2, 64)
   gecko_id: string;
 
-  @Field((type) => Float, { nullable: true })
-  market_cap: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  market_cap: BigInt | null;
 
-  @Field((type) => Int, { nullable: true })
-  market_cap_rank: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  market_cap_rank: BigInt | null;
 
   @Field((type) => Int, { nullable: true })
   fully_diluted_valuation: number | null;
@@ -52,14 +53,14 @@ export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
   @Field()
   gecko_id: string;
 
-  @Field((type) => Date)
+  @Field((type) => GraphQLBigInt)
   timestamp: BigInt;
 
-  @Field({ nullable: true })
-  market_cap: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  market_cap: BigInt | null;
 
-  @Field({ nullable: true })
-  market_cap_rank: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  market_cap_rank: BigInt | null;
 
   @Field({ nullable: true })
   fully_diluted_valuation: number | null;
