@@ -19,8 +19,13 @@ export async function createGeckoFinanceRecord(
   return null;
 }
 
-// export async function getLatestGeckoFinanceRecord(  
-//   ctx: Context,
-//   gecko_id: string): Promise<GeckoFinance | null> {
-
-//   }
+export async function selectLatestGeckoFinance(ctx: Context, gecko_id: string) {
+  return await ctx.prisma.geckoFinance.findFirst({
+    where: { 
+      gecko_id: gecko_id 
+    },
+    orderBy: {
+      timestamp: "desc"
+    }
+  });
+}

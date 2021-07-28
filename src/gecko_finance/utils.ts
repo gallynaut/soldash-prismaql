@@ -1,7 +1,7 @@
 import { CoinMarket } from "coingecko-api-v3";
 import { getGeckoTimestamp } from "../common/utils";
 import { Context } from "../context";
-import { selectGeckoId, upsertToken } from "../token/store";
+import { selectTokenIdByGeckoId, upsertToken } from "../token/store";
 import { AddTokenInput } from "../token/type";
 import { createGeckoFinanceRecord } from "./store";
 import { AddGeckoFinanceInput } from "./type";
@@ -11,7 +11,7 @@ import { AddGeckoFinanceInput } from "./type";
 // other coins should be populated on an as-needed basis
 export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
   geckoList.forEach(async (coin) => {
-    const id = await selectGeckoId(ctx, coin.id);
+    const id = await selectTokenIdByGeckoId(ctx, coin.id);
     if (id === null) {
       const newToken: AddTokenInput = {
         name: coin.name,

@@ -35,3 +35,14 @@ export async function getGeckoIds(ctx: Context, limit: number = 100) {
   });
   return valid_gecko_ids.map((id) => id.gecko_id);
 }
+
+export async function selectLatestGeckoSocial(ctx: Context, gecko_id: string) {
+  return await ctx.prisma.geckoSocial.findFirst({
+    where: { 
+      gecko_id: gecko_id 
+    },
+    orderBy: {
+      timestamp: "desc"
+    }
+  });
+}

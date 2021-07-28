@@ -38,14 +38,12 @@ export async function upsertTokenSocial(
   return null;
 }
 
-export async function selectGeckoId(ctx: Context, gecko_id: string) {
+export async function selectTokenIdByGeckoId(ctx: Context, gecko_id: string):Promise<number> {
   const t = await ctx.prisma.token.findUnique({
     where: { gecko_id: gecko_id },
   });
   if (t !== null && t.id) {
     return t.id;
-  } else {
-    return null;
   }
 }
 
@@ -69,45 +67,12 @@ export async function selectGeckoTop250(ctx: Context): Promise<string[]> {
       ? 1
       : -1
   );
-  const top250 = sortedResult.map((coin: any) => coin.gecko_id);
+  const top250:string[] = sortedResult.map((coin: any) => coin.gecko_id);
   return top250;
 }
 
-// export async function selectGeckoTop250Rank(ctx: Context) {
-//   const result: (Token & {gecko_social: PrismaGeckoSocial[]})[]  = await ctx.prisma.token.findMany({
-//     include: {
-//       gecko_social: {
-//         orderBy: {
-//           timestamp: "asc",
-//         },
-//       },
-//     },
-//   });
-//   const sortedResult = result.sort((a, b) => {
-//      a.gecko_social[0].gecko_rank > b.gecko_social[0].gecko_rank ? 1 : -1
-//     }
-//   );
-//   console.log("SORTED: ", sortedResult.length)
-//   return sortedResult;
-// }
-// function compare_gecko_ranks(a,b) {
-
-//   // if (a is less than b by some ordering criterion) {
-//   //   return -1;
-//   // }
-//   // if (a is greater than b by the ordering criterion) {
-//   //   return 1;
-//   // }
-//   // a must be equal to b
-//   return 0;
-// }
-
-// export async function selectGeckoId(ctx: Context, newToken: AddTokenInput) {
-//   const t = await ctx.prisma.token.findUnique({where: {gecko_id: newToken.gecko_id}})
-//   if(t.id) {
-//     return t.id
-//   }
-//   const newT = await ctx.prisma.token.create({data: newToken})
-//   console.log("new token ", newT.id, " created for ", newT.gecko_id)
-//   return newT
-// }
+export async function selectTokenSocialByID(ctx: Context, token_id: number) {
+  return await ctx.prisma.tokenSocial.findUnique({
+    where: { token_id: token_id },
+  });
+}
