@@ -18,7 +18,7 @@
     "@graphql-codegen/introspection": "^1.18.2",
     "@graphql-codegen/typescript": "^1.23.0",
     "@graphql-codegen/typescript-operations": "^1.18.4",
-    "@prisma/client": "^2.27.0",
+    "@prisma/client": "^2.28.0",
     "@solana/spl-token-registry": "^0.2.203",
     "@solana/web3.js": "^1.22.0",
     "apollo-server": "2.25.2",
@@ -28,7 +28,6 @@
     "graphql": "15.5.1",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.10.0",
-    "prisma": "2.27.0",
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
@@ -45,6 +44,7 @@
     "@types/ws": "7.4.6",
     "graphql-bigint": "^1.0.0",
     "prettier": "2.3.2",
+    "prisma": "^2.28.0",
     "ts-node": "10.1.0",
     "ts-node-dev": "1.1.8",
     "type-graphql": "1.1.1",
