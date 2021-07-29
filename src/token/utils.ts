@@ -3,7 +3,6 @@ import {
   TokenInfo,
   ENV as SolanaENV,
 } from "@solana/spl-token-registry";
-import { fetchGeckoSocial } from "../gecko_social/utils";
 import { Context } from "../context";
 import { upsertToken, upsertTokenSocial } from "./store";
 import { AddTokenInput, AddTokenSocialInput } from "./type";
@@ -56,11 +55,11 @@ export async function parse_sol_coins(
   };
   upsertTokenSocial(ctx, updTknSocial);
 
-  if (gecko_id !== null) {
-    setTimeout(() => {
-      fetchGeckoSocial(ctx, gecko_id);
-    }, 10000);
-  }
+  // if (gecko_id !== null) {
+  //   setTimeout(() => {
+  //     fetchGeckoSocial(ctx, gecko_id);
+  //   }, 10000);
+  // }
 }
 
 export const get_gecko_id = (t: TokenInfo): string | null => {

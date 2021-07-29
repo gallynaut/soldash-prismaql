@@ -11,7 +11,7 @@ export async function createGeckoFinanceRecord(
     geckoFinance = await ctx.prisma.geckoFinance.create({
       data: geckoFinanceRecord,
     });
-    console.log("Added gecko finance record for ", geckoFinance.id);
+    console.log("Added gecko finance record for ", geckoFinance.gecko_id);
     return geckoFinance;
   } catch (err) {
     console.log("Error adding gecko finance: ", err);
@@ -21,11 +21,11 @@ export async function createGeckoFinanceRecord(
 
 export async function selectLatestGeckoFinance(ctx: Context, gecko_id: string) {
   return await ctx.prisma.geckoFinance.findFirst({
-    where: { 
-      gecko_id: gecko_id 
+    where: {
+      gecko_id: gecko_id,
     },
     orderBy: {
-      timestamp: "desc"
-    }
+      timestamp: "desc",
+    },
   });
 }

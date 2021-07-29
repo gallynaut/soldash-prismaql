@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { ObjectType, InputType, Field, ID, Float, Int } from "type-graphql";
 import { Length } from "class-validator";
-import GraphQLBigInt from "graphql-bigint"
+import GraphQLBigInt from "graphql-bigint";
 
 @ObjectType()
 export default class GeckoSocial {

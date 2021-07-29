@@ -38,3 +38,26 @@ export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
     createGeckoFinanceRecord(ctx, newGeckoFinanceRecord);
   });
 }
+
+// Fetches the top 250 coins from Gecko by marketcap
+export async function fetchGeckoCoinsTop250(ctx: Context) {
+  let geckoList: CoinMarket[];
+  try {
+    geckoList = await ctx.gecko.coinMarket({
+      vs_currency: "usd",
+      ids: "",
+      order: "market_cap_desc",
+      per_page: 250,
+      price_change_percentage: "24h",
+    });
+  } catch (err) {
+    console.log("couldnt fetch gecko list: ", err);
+    return;
+  }
+  return geckoList;
+}
+
+export async function refreshGeckoFinance(ctx: Context) {
+  const coins: CoinMarket[] = await fetchGeckoCoinsTop250(ctx);
+  fetchGeckoFinance(ctx, coins);
+}

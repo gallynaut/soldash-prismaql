@@ -1,5 +1,6 @@
 import { GeckoSocial } from "@prisma/client";
 import { Context } from "../context";
+import { selectTokensWithGeckoId } from "../token/store";
 import { AddGeckoSocialInput } from "./type";
 
 export async function createGeckoSocialRecord(
@@ -38,11 +39,43 @@ export async function getGeckoIds(ctx: Context, limit: number = 100) {
 
 export async function selectLatestGeckoSocial(ctx: Context, gecko_id: string) {
   return await ctx.prisma.geckoSocial.findFirst({
-    where: { 
-      gecko_id: gecko_id 
+    where: {
+      gecko_id: gecko_id,
     },
     orderBy: {
-      timestamp: "desc"
-    }
+      timestamp: "desc",
+    },
   });
+}
+
+export async function selectGeckoIdsByGeckoRank(
+  ctx: Context
+): Promise<string[]> {
+  const tokens: string[] = await selectTokensWithGeckoId(ctx);
+  const geckoSocials: GeckoSocial[] = new Array<GeckoSocial>();
+  for await (const t of tokens) {
+    const newSocial = await selectLatestGeckoSocial(ctx, t);
+    if (newSocial !== null) {
+      geckoSocials.push(newSocial);
+    }
+  }
+  geckoSocials.sort(geckoRankSorter());
+  return geckoSocials.map((t) => t.gecko_id);
+}
+
+function geckoRankSorter() {
+  return function (a: GeckoSocial, b: GeckoSocial) {
+    // nulls sort after anything else
+    if (a === null || a.gecko_rank === null) {
+      return 1;
+    } else if (b === null || b.gecko_rank === null) {
+      return -1;
+    }
+    // equal items sort equally
+    else if (a.gecko_rank === b.gecko_rank) {
+      return 0;
+    } else {
+      return a.gecko_rank < b.gecko_rank ? -1 : 1;
+    }
+  };
 }

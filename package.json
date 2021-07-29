@@ -10,7 +10,8 @@
     "docker": "docker-compose up -d",
     "build": "tsc",
     "prod": "node dist/index.js",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.21.7",
