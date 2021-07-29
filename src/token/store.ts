@@ -76,14 +76,14 @@ export async function selectTokenByGeckoId(
 export async function selectTokenIdByGeckoId(
   ctx: Context,
   gecko_id: string
-): Promise<number|null> {
+): Promise<number | null> {
   const t = await ctx.prisma.token.findUnique({
     where: { gecko_id: gecko_id },
   });
   if (t !== null && t.id) {
     return t.id;
   }
-  return null
+  return null;
 }
 
 export async function selectTokensByGeckoRank(ctx: Context): Promise<Token[]> {

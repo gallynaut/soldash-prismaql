@@ -61,6 +61,7 @@ model GeckoFinance {
   market_cap                  BigInt
   market_cap_rank             BigInt?
   fully_diluted_valuation     BigInt?
+  volume                      BigInt?
   total_supply                Float?
   max_supply                  Float?
   circulating_supply          Float?

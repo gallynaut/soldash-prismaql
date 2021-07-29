@@ -21,8 +21,11 @@ export default class GeckoFinance {
   @Field((type) => GraphQLBigInt, { nullable: true })
   market_cap_rank: BigInt | null;
 
-  @Field((type) => Int, { nullable: true })
-  fully_diluted_valuation: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  fully_diluted_valuation: BigInt | null;
+
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  volume: BigInt | null;
 
   @Field((type) => Int, { nullable: true })
   total_supply: number | null;
@@ -62,8 +65,11 @@ export class AddGeckoFinanceInput implements Partial<GeckoFinance> {
   @Field((type) => GraphQLBigInt, { nullable: true })
   market_cap_rank: BigInt | null;
 
-  @Field({ nullable: true })
-  fully_diluted_valuation: number | null;
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  fully_diluted_valuation: BigInt | null;
+
+  @Field((type) => GraphQLBigInt, { nullable: true })
+  volume: BigInt | null;
 
   @Field({ nullable: true })
   total_supply: number | null;

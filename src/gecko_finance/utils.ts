@@ -26,6 +26,7 @@ export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
       market_cap: BigInt(coin.market_cap),
       market_cap_rank: BigInt(coin.market_cap_rank),
       fully_diluted_valuation: coin.fully_diluted_valuation,
+      volume: BigInt(coin.total_volume),
       total_supply: coin.total_supply,
       max_supply: coin.max_supply,
       circulating_supply: coin.circulating_supply,
