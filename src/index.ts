@@ -14,7 +14,7 @@ import { CoinMarket } from "coingecko-api-v3";
 import {
   fetchGeckoFinance,
   refreshGeckoFinance,
-  fetchGeckoCoinsTop250,
+  fetchGeckoCoinsTop500,
 } from "./gecko_finance/utils";
 import { MIN1, MIN15 } from "./common/contants";
 import {
@@ -77,7 +77,7 @@ app();
 // fetch intervals and delays should be moved to environment variables
 
 setInterval(async () => {
-  const coins: CoinMarket[] = await fetchGeckoCoinsTop250(context);
+  const coins: CoinMarket[] = await fetchGeckoCoinsTop500(context);
   fetchGeckoFinance(context, coins);
 }, MIN15);
 

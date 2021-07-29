@@ -40,7 +40,7 @@ export async function fetchGeckoFinance(ctx: Context, geckoList: CoinMarket[]) {
 }
 
 // Fetches the top 250 coins from Gecko by marketcap
-export async function fetchGeckoCoinsTop250(ctx: Context) {
+export async function fetchGeckoCoinsTop500(ctx: Context) {
   let geckoList: CoinMarket[];
   try {
     geckoList = await ctx.gecko.coinMarket({
@@ -48,16 +48,31 @@ export async function fetchGeckoCoinsTop250(ctx: Context) {
       ids: "",
       order: "market_cap_desc",
       per_page: 250,
+      page: 1,
       price_change_percentage: "24h",
     });
   } catch (err) {
-    console.log("couldnt fetch gecko list: ", err);
+    console.log("couldnt fetch gecko list1: ", err);
     return;
   }
-  return geckoList;
+  let newList: CoinMarket[];
+  try {
+    newList = await ctx.gecko.coinMarket({
+      vs_currency: "usd",
+      ids: "",
+      order: "market_cap_desc",
+      per_page: 250,
+      page: 2,
+      price_change_percentage: "24h",
+    });
+  } catch (err) {
+    console.log("couldnt fetch gecko list2: ", err);
+    return;
+  }
+  return geckoList.concat(newList);
 }
 
 export async function refreshGeckoFinance(ctx: Context) {
-  const coins: CoinMarket[] = await fetchGeckoCoinsTop250(ctx);
+  const coins: CoinMarket[] = await fetchGeckoCoinsTop500(ctx);
   fetchGeckoFinance(ctx, coins);
 }
