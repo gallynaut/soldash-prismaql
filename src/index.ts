@@ -29,7 +29,7 @@ const port = parseInt(process.env.APP_PORT || "8080");
 
 export async function startup(ctx: Context) {
   // await check_sol_coins(context)
-  // refreshGeckoFinance(context)
+  refreshGeckoFinance(context)
   // const top250 = await selectGeckoTop250(context);
   // await fetchGeckoSocialByIds(context, top250);
 
