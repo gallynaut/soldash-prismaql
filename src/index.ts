@@ -18,7 +18,7 @@ import {
 import { MIN1, MIN15 } from './common/contants'
 import { selectGeckoTop250 } from './token/store'
 
-const port = parseInt(process.env.APP_PORT || '8080')
+const port = parseInt(process.env.APP_PORT || '8080', 10)
 
 export async function startup(ctx: Context): Promise<void> {
   // await check_sol_coins(context)

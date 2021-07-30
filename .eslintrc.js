@@ -37,6 +37,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'import/extensions': 'off',
     'no-console': 'off',
+    'no-restricted-syntax': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'variableLike', format: ['camelCase', 'UPPER_CASE'] },
