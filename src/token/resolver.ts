@@ -119,8 +119,12 @@ export default class TokenResolver {
   }
 
   @Query((returns) => [Token])
-  async tokens(@Ctx() ctx: Context): Promise<Token[]> {
-    return selectTokensByGeckoRank(ctx)
+  async tokens(
+    @Ctx() ctx: Context,
+    @Arg('start') start: number,
+    @Arg('size') size: number
+  ): Promise<Token[]> {
+    return selectTokensByGeckoRank(ctx, start, size)
   }
 
   @Query((geckoId) => Token, { nullable: true })
