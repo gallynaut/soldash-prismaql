@@ -94,11 +94,7 @@ export async function selectTokenIdByGeckoId(
   return null
 }
 
-export async function selectTokensByGeckoRank(
-  ctx: Context,
-  offset: number,
-  limit: number
-): Promise<Token[]> {
+export async function selectTokensByGeckoRank(ctx: Context): Promise<Token[]> {
   const tokens = await ctx.prisma.token.findMany({
     where: {
       gecko_id: {
@@ -142,7 +138,7 @@ export async function selectTokensByGeckoRank(
     }
     return a.gecko_social[0].gecko_rank < b.gecko_social[0].gecko_rank ? -1 : 1
   })
-  return tokens.slice(offset, offset + limit)
+  return tokens
 }
 
 export async function selectGeckoTop250(ctx: Context): Promise<string[]> {

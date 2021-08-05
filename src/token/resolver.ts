@@ -124,7 +124,13 @@ export default class TokenResolver {
     @Arg('offset') offset: number,
     @Arg('limit') limit: number
   ): Promise<Token[]> {
-    return selectTokensByGeckoRank(ctx, offset, limit)
+    const allTokensByRank = await selectTokensByGeckoRank(ctx)
+    return allTokensByRank.slice(offset, offset + limit)
+  }
+  @Query((returns) => [Token])
+  async allTokens(@Ctx() ctx: Context): Promise<Token[]> {
+    const allTokensByRank = await selectTokensByGeckoRank(ctx)
+    return allTokensByRank
   }
 
   @Query((geckoId) => Token, { nullable: true })
