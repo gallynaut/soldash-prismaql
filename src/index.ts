@@ -51,7 +51,6 @@ const app = async () => {
   })
   const corsOptions = {
     origin: true,
-    credentials: true,
   }
 
   new ApolloServer({
