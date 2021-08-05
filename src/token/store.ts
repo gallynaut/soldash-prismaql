@@ -6,20 +6,25 @@ import Token, { AddTokenInput, TokenSocial, AddTokenSocialInput } from './type'
 export async function upsertToken(
   ctx: Context,
   t: AddTokenInput
-): Promise<number> {
-  let token: Token
-  try {
-    token = await ctx.prisma.token.upsert({
-      where: { symbol: t.symbol },
-      update: t,
-      create: t,
-    })
-    console.log('CREATE, TOKEN:', token.name, ' - ', token.id)
-    return token.id
-  } catch (err) {
-    console.log('ERR- CREATE, TOKEN:', t.name, err)
-  }
-  return null
+): Promise<Token> {
+  return ctx.prisma.token.upsert({
+    where: { symbol: t.symbol },
+    update: t,
+    create: t,
+  })
+  // let token: Token
+  // try {
+  //   token = await ctx.prisma.token.upsert({
+  //     where: { symbol: t.symbol },
+  //     update: t,
+  //     create: t,
+  //   })
+  //   console.log('CREATE, TOKEN:', token.name, ' - ', token.id)
+  //   return token.id
+  // } catch (err) {
+  //   console.log('ERR- CREATE, TOKEN:', t.name, err)
+  // }
+  // return null
 }
 // export async function upsertTokenSolAddress(ctx: Context, gecko_id: string, sol_address: string) {
 
@@ -29,20 +34,25 @@ export async function upsertToken(
 export async function upsertTokenSocial(
   ctx: Context,
   soc: AddTokenSocialInput
-): Promise<number> {
-  let tokenSocial: TokenSocial
-  try {
-    tokenSocial = await ctx.prisma.tokenSocial.upsert({
-      where: { id: soc.token_id },
-      update: soc,
-      create: soc,
-    })
-    console.log('CREATE, TOKEN_SOCIAL:', soc.token_id)
-    return tokenSocial.id
-  } catch (err) {
-    console.log('ERR- CREATE, TOKEN_SOCIAL:', err)
-  }
-  return null
+): Promise<TokenSocial> {
+  return ctx.prisma.tokenSocial.upsert({
+    where: { id: soc.token_id },
+    update: soc,
+    create: soc,
+  })
+  // let tokenSocial: TokenSocial
+  // try {
+  //   tokenSocial = await ctx.prisma.tokenSocial.upsert({
+  //     where: { id: soc.token_id },
+  //     update: soc,
+  //     create: soc,
+  //   })
+  //   console.log('CREATE, TOKEN_SOCIAL:', soc.token_id)
+  //   return tokenSocial.id
+  // } catch (err) {
+  //   console.log('ERR- CREATE, TOKEN_SOCIAL:', err)
+  // }
+  // return null
 }
 
 export async function selectTokensWithGeckoId(ctx: Context): Promise<string[]> {

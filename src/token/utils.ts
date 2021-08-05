@@ -32,9 +32,9 @@ export async function parseSolCoins(
     // wrapped tokens throwing errors - need to address another way
     // gecko_id: geckoId,
   }
-  const id = await upsertToken(ctx, tokenObj)
+  const t = await upsertToken(ctx, tokenObj)
 
-  if (id == null) {
+  if (t.id == null) {
     return
   }
   let website = ''
@@ -48,7 +48,7 @@ export async function parseSolCoins(
     }
   }
   const updTknSocial: AddTokenSocialInput = {
-    token_id: id,
+    token_id: t.id,
     website: website === '' ? null : website,
     twitter: twitter === '' ? null : twitter,
     logoURI: tkn.logoURI,

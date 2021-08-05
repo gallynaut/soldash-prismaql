@@ -6,17 +6,20 @@ import { AddGeckoSocialInput } from './type'
 export async function createGeckoSocialRecord(
   ctx: Context,
   newGeckoSocialData: AddGeckoSocialInput | any
-): Promise<number> {
-  try {
-    const newRecord: GeckoSocial = await ctx.prisma.geckoSocial.create({
-      data: newGeckoSocialData,
-    })
-    console.log('CREATE, GECKO_SOCIAL:', newRecord.gecko_id)
-    return newRecord.id
-  } catch (err) {
-    console.log('ERR- CREATE, GECKO_SOCIAL:', newGeckoSocialData.gecko_id, err)
-  }
-  return null
+): Promise<GeckoSocial> {
+  return ctx.prisma.geckoSocial.create({
+    data: newGeckoSocialData,
+  })
+  // try {
+  //   const newRecord: GeckoSocial = await ctx.prisma.geckoSocial.create({
+  //     data: newGeckoSocialData,
+  //   })
+  //   console.log('CREATE, GECKO_SOCIAL:', newRecord.gecko_id)
+  //   return newRecord.id
+  // } catch (err) {
+  //   console.log('ERR- CREATE, GECKO_SOCIAL:', newGeckoSocialData.gecko_id, err)
+  // }
+  // return null
 }
 
 export async function getGeckoIds(
