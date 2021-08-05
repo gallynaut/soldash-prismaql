@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import * as tq from 'type-graphql'
-import 'cors'
 import { ApolloServer } from 'apollo-server'
 import { TimestampResolver } from 'graphql-scalars'
 import { GraphQLScalarType } from 'graphql'
@@ -50,14 +49,15 @@ const app = async () => {
     ],
     scalarsMap: [{ type: GraphQLScalarType, scalar: TimestampResolver }],
   })
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }
 
   new ApolloServer({
     schema,
     context,
-    cors: {
-      origin: '*',
-      allowedHeaders: ['Content-Type', 'Origin', 'Accept'],
-    },
+    cors: corsOptions,
   }).listen({ port }, () =>
     console.log(
       `
