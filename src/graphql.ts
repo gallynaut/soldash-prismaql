@@ -53,6 +53,7 @@ export type GeckoSocial = {
 export type Query = {
   __typename?: 'Query';
   tokens: Array<Token>;
+  allTokens: Array<Token>;
   findTokenByGeckoId?: Maybe<Token>;
 };
 
@@ -245,6 +246,7 @@ export type GeckoSocialResolvers<ContextType = any, ParentType extends Resolvers
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryTokensArgs, 'limit' | 'offset'>>;
+  allTokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType>;
   findTokenByGeckoId?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryFindTokenByGeckoIdArgs, 'gecko_id'>>;
 };
 
