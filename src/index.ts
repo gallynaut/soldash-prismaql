@@ -50,7 +50,7 @@ const app = async () => {
     scalarsMap: [{ type: GraphQLScalarType, scalar: TimestampResolver }],
   })
   const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: true,
     credentials: true,
   }
 
