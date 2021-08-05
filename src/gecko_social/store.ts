@@ -14,7 +14,7 @@ export async function createGeckoSocialRecord(
     console.log('CREATE, GECKO_SOCIAL:', newRecord.gecko_id)
     return newRecord.id
   } catch (err) {
-    console.log('ERR- CREATE, GECKO_SOCIAL:', newGeckoSocialData.gecko_id ,err)
+    console.log('ERR- CREATE, GECKO_SOCIAL:', newGeckoSocialData.gecko_id, err)
   }
   return null
 }

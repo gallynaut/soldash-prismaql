@@ -3,7 +3,6 @@ import {
   GraphQLScalarType,
   GraphQLScalarTypeConfig,
 } from 'graphql'
-
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
@@ -34,7 +33,8 @@ export type GeckoFinance = {
   gecko_id: Scalars['String']
   market_cap?: Maybe<Scalars['BigInt']>
   market_cap_rank?: Maybe<Scalars['BigInt']>
-  fully_diluted_valuation?: Maybe<Scalars['Int']>
+  fully_diluted_valuation?: Maybe<Scalars['BigInt']>
+  volume?: Maybe<Scalars['BigInt']>
   total_supply?: Maybe<Scalars['Int']>
   max_supply?: Maybe<Scalars['Int']>
   circulating_supply?: Maybe<Scalars['Float']>
@@ -269,10 +269,11 @@ export type GeckoFinanceResolvers<
     ContextType
   >
   fully_diluted_valuation?: Resolver<
-    Maybe<ResolversTypes['Int']>,
+    Maybe<ResolversTypes['BigInt']>,
     ParentType,
     ContextType
   >
+  volume?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>
   total_supply?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   max_supply?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   circulating_supply?: Resolver<
