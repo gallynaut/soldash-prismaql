@@ -50,7 +50,7 @@ const app = async () => {
     scalarsMap: [{ type: GraphQLScalarType, scalar: TimestampResolver }],
   })
   const corsOptions = {
-    origin: true,
+    origin: ['localhost:3000', 'solanadash.io', 'studio.apollographql.com'],
   }
 
   new ApolloServer({
