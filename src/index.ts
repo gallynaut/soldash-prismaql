@@ -56,7 +56,6 @@ const app = async () => {
   new ApolloServer({
     schema,
     context,
-    cors: corsOptions,
   }).listen({ port }, () =>
     console.log(
       `
